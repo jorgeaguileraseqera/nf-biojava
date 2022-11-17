@@ -42,6 +42,8 @@ jobs:
         with:
           java-version: ${{matrix.java_version}}
           architecture: x64
+          distribution: 'adopt'
+          cache: gradle
       - name: Compile
         run: ./gradlew asciidoctor
       - name: Upload artifact
