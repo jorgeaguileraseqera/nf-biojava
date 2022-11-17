@@ -68,7 +68,7 @@ dependencies {
     compileOnly 'org.pf4j:pf4j:3.4.1'
     // add here plugins depepencies
 
-    implementation 'org.biojava:biojava-core:4.0.0'
+    implementation 'org.biojava:biojava-core:5.4.0'
 
     // test configuration
     testImplementation "org.codehaus.groovy:groovy:3.0.8"
