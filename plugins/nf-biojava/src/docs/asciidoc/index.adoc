@@ -1,0 +1,57 @@
+= Nextflow nf-biojava plugin
+
+This project shows how to implement a simple Nextflow plugin named `nf-biojava` using Java instead Groovy
+
+It provides the ability to integrate functionalities from the `biojava` project (https://biojava.org/) into
+Nexflow pipelines
+
+NOTE: THIS IS A PREVIEW TECHNOLOGY, FEATURES AND CONFIGURATION SETTINGS CAN CHANGE IN FUTURE RELEASES.
+
+== Requirements
+
+- java 11 or later
+
+== Build
+
+execute into the cloned directory:
+
+```
+./gradlew build
+```
+
+== Documentation
+
+execute into the cloned directory:
+
+```
+./gradlew asciidoctor
+```
+
+if all it's ok you can find the documentation at `plugins/nf-biojava/build/docs/asciidoc` directory
+
+== Get started
+
+Make sure to have Nextflow `22.10.0` or later. Add the following snippet to your `nextflow.config` file.
+
+```
+plugins {
+  id 'nf-biojava@0.0.1'
+}
+```
+
+The above declaration allows the use of the plugin functionalities in your Nextflow pipelines.
+
+
+## Configuration
+
+
+## Available functions
+
+This plugin adds to the Nextflow DSL the following extensions that allows performing of queries and populating database tables.
+
+### createDNASequence
+
+### createDNASequence
+
+### getSequenceForId
+

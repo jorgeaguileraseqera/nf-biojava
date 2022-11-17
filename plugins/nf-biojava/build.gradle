@@ -19,6 +19,7 @@ plugins {
     // Apply the groovy plugin to add support for Groovy
     id 'groovy'
     id 'idea'
+    id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
 group = 'io.nextflow'
