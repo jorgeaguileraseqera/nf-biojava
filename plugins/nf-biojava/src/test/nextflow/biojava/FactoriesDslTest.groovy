@@ -1,4 +1,4 @@
-package nextflow.hello
+package nextflow.biojava
 
 import nextflow.Channel
 import nextflow.plugin.Plugins
@@ -12,16 +12,14 @@ import spock.lang.Timeout
 import test.Dsl2Spec
 import test.MockScriptRunner
 
-import java.nio.file.Files
 import java.nio.file.Path
-
 
 /**
  * @author : jorge <jorge.aguilera@seqera.io>
  *
  */
-@Timeout(10)
-class HelloDslTest extends Dsl2Spec{
+@Timeout(90)
+class FactoriesDslTest extends Dsl2Spec{
 
     @Shared String pluginsMode
 
@@ -53,43 +51,47 @@ class HelloDslTest extends Dsl2Spec{
         pluginsMode ? System.setProperty('pf4j.mode',pluginsMode) : System.clearProperty('pf4j.mode')
     }
 
-    def 'should create a sequence' () {
+    def 'should emit a dna fasta' () {
         when:
         def SCRIPT = '''
-            include {createDNASequence} from 'plugin/nf-biojava'
-            createDNASequence('GTAC') 
-            '''
-        and:
-        DNASequence result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
-        then:
-        result.getDNAType() == DNASequence.DNAType.UNKNOWN
-    }
-
-    def 'should create a sequence from a file' () {
-        given:
-        def file = Files.createTempFile("",".dna")
-        file.text = "GTAC"*200
-        when:
-        def SCRIPT = """
-            include {createDNASequence} from 'plugin/nf-biojava'
-            createDNASequence( Path.of('${file.toAbsolutePath()}') ) 
-            """
-        and:
-        DNASequence result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
-        then:
-        result.getDNAType() == DNASequence.DNAType.UNKNOWN
-    }
-
-    def 'should get a sequence from a url' () {
-        when:
-        def SCRIPT = """
-            include {getSequenceForId} from 'plugin/nf-biojava'
-            getSequenceForId( 'Q21691' ) 
-            """
-        and:
+            include {fromDNAFasta} from 'plugin/nf-biojava'
+            
+            channel
+                .fromDNAFasta( file('https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/reference/genome.fasta') )                
+        '''
         def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
-        println result.properties
+
         then:
-        result.sequenceAsString.startsWith('MDLLDKVMGEMGSKPGSTAKKPATSASSTPRTNVWGTAKKPSSQQQPPKPLFTTP')
+        def val = result.val
+        val[0]=="I"
+        val[1].getDNAType() == DNASequence.DNAType.UNKNOWN
+        result.val == Channel.STOP
+    }
+
+    def 'should process a gz fasta' () {
+        when:
+        def SCRIPT = '''
+            include {fromProteinFasta} from 'plugin/nf-biojava'
+            
+            process echo{
+                input: tuple val(key), val(v)
+                output: stdout
+                script:
+                """
+                echo key = ${key}
+                echo dna = ${v.toString()[0..20]}             
+                """        
+            }
+            workflow{
+                channel
+                    .fromProteinFasta(file('https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/reference/genome.fasta.gz'))
+                | echo
+                | view
+            }                
+        '''
+        def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+
+        then:
+        true
     }
 }

@@ -52,32 +52,46 @@ For example
 ----
 include {
     createDNASequence;
-    getSequenceForId;
+    getProteinSequenceForId;
 } from 'plugin/nf-biojava'
 
 println createDNASequence( path('example.dna') )
 
-println getSequenceForId( 'Q21691' )
+println getProteinSequenceForId( 'Q21691' )
 ----
 
 
-## Configuration
+== Configuration
 
 TBD!!!
 
-## Available functions
+== Available Factories
+
+=== fromRNAFasta(path)
+
+emit a tuple of ID,RNA
+
+=== fromDNAFasta(path)
+
+emit a tuple of ID,DNA
+
+=== fromProteinFasta(path)
+
+emit a tuple of ID,Protein
+
+== Available functions
 
 This plugin adds to the Nextflow DSL the following extensions that allows performing of queries and populating database tables.
 
-### createDNASequence
+=== createDNASequence
 
 TBD!!!
 
-### createDNASequence
+=== createDNASequence
 
 TBD!!!
 
 
-### getSequenceForId
+=== getProteinSequenceForId
 
 TBD!!!
