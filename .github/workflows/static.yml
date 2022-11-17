@@ -27,15 +27,20 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        java_version: [11]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Pages
         uses: actions/configure-pages@v2
-      - name: Setup Java 11
+      - name: Setup Java ${{ matrix.java_version }}
         uses: actions/setup-java@v3
         with:
-          java-version: 11
+          java-version: ${{matrix.java_version}}
           architecture: x64
       - name: Compile
         run: ./gradlew asciidoctor
