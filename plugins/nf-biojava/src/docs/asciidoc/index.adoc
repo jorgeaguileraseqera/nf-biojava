@@ -79,6 +79,28 @@ emit a tuple of ID,DNA
 
 emit a tuple of ID,Protein
 
+.fromProteinFastaExample.nf
+[source]
+----
+include {fromProteinFasta} from 'plugin/nf-biojava'
+
+process echo{
+    input: tuple val(key), val(v)
+    output: stdout
+    script:
+    """
+    echo key = ${key}
+    echo dna = ${v.toString()[0..20]}
+    """
+}
+workflow{
+    channel
+        .fromProteinFasta(file('https://raw.githubusercontent.com/nf-core/test-datasets/rnaseq/reference/genome.fasta.gz'))
+    | echo
+    | view
+}
+----
+
 == Available functions
 
 This plugin adds to the Nextflow DSL the following extensions that allows performing of queries and populating database tables.
