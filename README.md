@@ -21,4 +21,4 @@ execute into the cloned directory:
 
 ## Documentation
 
-you can find the documentation at https://github.io/
+you can find the documentation at https://jorgeaguileraseqera.github.io/nf-biojava/

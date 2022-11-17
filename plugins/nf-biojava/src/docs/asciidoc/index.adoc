@@ -13,7 +13,9 @@ NOTE: THIS IS A PREVIEW TECHNOLOGY, FEATURES AND CONFIGURATION SETTINGS CAN CHAN
 
 == Build
 
-execute into the cloned directory:
+- Clone the repository from https://github.com/jorgeaguileraseqera/nf-biojava into a directory
+
+- Execute into the cloned directory:
 
 ```
 ./gradlew build
@@ -33,17 +35,35 @@ if all it's ok you can find the documentation at `plugins/nf-biojava/build/docs/
 
 Make sure to have Nextflow `22.10.0` or later. Add the following snippet to your `nextflow.config` file.
 
-```
+.nextflow.config
+[source, groovy]
+----
 plugins {
   id 'nf-biojava@0.0.1'
 }
-```
+----
 
 The above declaration allows the use of the plugin functionalities in your Nextflow pipelines.
+
+For example
+
+.test.nf
+[source,groovy]
+----
+include {
+    createDNASequence;
+    getSequenceForId;
+} from 'plugin/nf-biojava'
+
+println createDNASequence( path('example.dna') )
+
+println getSequenceForId( 'Q21691' )
+----
 
 
 ## Configuration
 
+TBD!!!
 
 ## Available functions
 
@@ -51,7 +71,13 @@ This plugin adds to the Nextflow DSL the following extensions that allows perfor
 
 ### createDNASequence
 
+TBD!!!
+
 ### createDNASequence
+
+TBD!!!
+
 
 ### getSequenceForId
 
+TBD!!!
