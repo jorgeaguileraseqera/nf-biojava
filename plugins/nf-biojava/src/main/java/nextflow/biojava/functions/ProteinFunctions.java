@@ -16,8 +16,8 @@ import java.util.LinkedHashMap;
  */
 public class ProteinFunctions {
 
-    public static ProteinSequence getSequenceForId(String uniProtId) throws Exception {
-        URL uniprotFasta = new URL(String.format("https://www.uniprot.org/uniprot/%s.fasta", uniProtId));
+    public static ProteinSequence getSequenceForId(String uniProtId, String urlPattern) throws Exception {
+        URL uniprotFasta = new URL(String.format(urlPattern, uniProtId));
         ProteinSequence seq = FastaReaderHelper.readFastaProteinSequence(uniprotFasta.openStream()).get(uniProtId);
         return seq;
     }

@@ -3,4 +3,4 @@ Plugin-Id: nf-biojava
 Plugin-Version: 0.0.1
 Plugin-Class: nextflow.biojava.BiojavaPlugin
 Plugin-Provider: nextflow
-Plugin-Requires: >=22.10.0
+Plugin-Requires: >=22.10.2

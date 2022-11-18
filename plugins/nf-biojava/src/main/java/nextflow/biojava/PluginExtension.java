@@ -39,9 +39,15 @@ public class PluginExtension extends PluginExtensionPoint{
      */
     private Session session;
 
+    /*
+    * A Map holding the configuration of the plugin
+    */
+    private BioConfig config;
+
     @Override
     protected void init(Session session) {
         this.session = session;
+        this.config = BioConfig.fromMap(session.getConfig());
     }
 
     @Function
@@ -66,7 +72,7 @@ public class PluginExtension extends PluginExtensionPoint{
 
     @Function
     public ProteinSequence getProteinSequenceForId(String uniProtId) throws Exception{
-        return ProteinFunctions.getSequenceForId(uniProtId);
+        return ProteinFunctions.getSequenceForId(uniProtId, this.config.getProteineRepoURL());
     }
 
     @Factory

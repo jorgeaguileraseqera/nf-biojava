@@ -87,9 +87,29 @@ class FunctionsDslTest extends Dsl2Spec{
             getProteinSequenceForId( 'Q21691' ) 
             """
         and:
-        def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
-        println result.properties
+        def result = new MockScriptRunner([
+                biojava:[
+                        proteineRepoURL:'https://www.uniprot.org/uniprot/%s.fasta'
+                ]
+        ]).setScript(SCRIPT).execute()
         then:
         result.sequenceAsString.startsWith('MDLLDKVMGEMGSKPGSTAKKPATSASSTPRTNVWGTAKKPSSQQQPPKPLFTTP')
+        result.description == 'NRDE3_CAEEL Nuclear RNAi defective-3 protein OS=Caenorhabditis elegans OX=6239 GN=nrde-3 PE=1 SV=1'
+    }
+
+    def 'should not get a sequence from an invalid url' () {
+        when:
+        def SCRIPT = """
+            include {getProteinSequenceForId} from 'plugin/nf-biojava'
+            getProteinSequenceForId( 'Q21691' ) 
+            """
+        and:
+        def result = new MockScriptRunner([
+                biojava:[
+                        proteineRepoURL:'https://this.url.doesnt.exists'
+                ]
+        ]).setScript(SCRIPT).execute()
+        then:
+        thrown(UnknownHostException)
     }
 }
