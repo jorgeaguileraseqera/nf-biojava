@@ -63,7 +63,17 @@ println getProteinSequenceForId( 'Q21691' )
 
 == Configuration
 
-TBD!!!
+The configuration of the plugin is under `biojava` scope.
+
+Following values are availables:
+
+|===
+| Key | Description | Default Value
+
+|proteineRepoURL | a pattern url where download the proteine | https://www.uniprot.org/uniprot/%s.fasta
+
+|===
+
 
 == Available Factories
 
